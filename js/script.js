@@ -106,66 +106,58 @@ $('.activities').on('input', function(e){
         if(e.target.checked){
             total += 100;
             disable(3);
-            disable(5);
+            
         }else{
             total -= 100;
             enable(3);
-            enable(5);
+           
         }
     }
     else if(e.target === activities[2]){
         if(e.target.checked){
             total += 100;
             disable(4);
-            disable(6);
+            
         }else{
             total -= 100;
             enable(4);
-            enable(6);
+           
         }
     }
     else if(e.target === activities[3]){
         if(e.target.checked){
             total += 100;
             disable(1);
-            disable(5);
+            
         }else{
             total -= 100;
             enable(1);
-            enable(5);
+           
         }
     }
     else if(e.target === activities[4]){
         if(e.target.checked){
             total += 100;
             disable(2);
-            disable(6);
+            
         }else{
             total -= 100;
             enable(2);
-            enable(6);
+        
         }
     }
     else if(e.target === activities[5]){
         if(e.target.checked){
             total += 100;
-            disable(1);
-            disable(3);
         }else{
             total -= 100;
-            enable(1);
-            enable(3);
         }
     }
     else if(e.target === activities[6]){
         if(e.target.checked){
             total += 100;
-            disable(2);
-            disable(4);
         }else{
             total -= 100;
-            enable(2);
-            enable(4);
         }
     }
     //reprint total
@@ -262,8 +254,8 @@ function isValidZip(zip){
 function isValidCvv(cvv){
     return /^\d{3}$/.test(cvv);
 }
-/*I like the blur listener because the box won't be displaced until after the user is finished typing*/
-$nameField.on('blur', function(e){
+
+$nameField.on('keyup', function(e){
     if(!isValidUsername(this.value)){
         $nameTip.show();
         nameValid = false;
@@ -282,7 +274,7 @@ $emailField.on('input', function(e){
         emailValid = true;
     }
 });
-$card.on('blur', function(e){
+$card.on('blur keyup', function(e){
     if(!isValidCard(this.value)){
         $cardTip.show();
         cardValid = false;
@@ -291,7 +283,7 @@ $card.on('blur', function(e){
         cardValid = true;
     }
 });
-$zip.on('blur', function(e){
+$zip.on('blur keyup', function(e){
     if(!isValidZip(this.value)){
         $zipTip.show();
         zipValid = false;
@@ -300,7 +292,7 @@ $zip.on('blur', function(e){
         zipValid = true;
     }
 });
-$cvv.on('blur', function(e){
+$cvv.on('blur keyup', function(e){
     if(!isValidCvv(this.value)){
         $cvvTip.show();
         cvvValid = false;
@@ -326,8 +318,13 @@ $('button[type="submit"]').on('click', function(e){
         $activityTip.show();
     }
     //make sure name and email are valid
-    else if(!nameValid || !emailValid){
+    if(!emailValid){
         e.preventDefault();
+        $emailTip.show();
+    }
+    if(!nameValid){
+        e.preventDefault();
+        $nameTip.show();
     }
     //if all is valid e.preventDefault won't be called and the page will refresh
 });
